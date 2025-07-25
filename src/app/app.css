@@ -1,0 +1,61 @@
+.whatsapp-float {
+  position: fixed;
+  right: 24px;
+  bottom: 24px;
+  z-index: 1050;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  box-shadow: 0 4px 16px rgba(0,0,0,0.18);
+  background: #25D366;
+  transition: transform 0.2s, box-shadow 0.2s;
+  animation: floatIn 0.7s cubic-bezier(.4,1.4,.6,1) both;
+}
+.whatsapp-float:hover {
+  transform: scale(1.08) translateY(-2px);
+  box-shadow: 0 8px 24px rgba(0,0,0,0.22);
+}
+@keyframes floatIn {
+  from { opacity: 0; transform: scale(0.7) translateY(40px); }
+  to { opacity: 1; transform: none; }
+}
+
+.dropdown-menu {
+  display: none;
+  position: absolute;
+  z-index: 2000;
+  background: #fff;
+  border: 1px solid #ddd;
+  border-radius: 0.5rem;
+  box-shadow: 0 8px 24px rgba(0,0,0,0.12);
+  margin-top: 0.5rem;
+}
+.dropdown-menu.show {
+  display: block;
+}
+
+/* Submenú lateral de subcategorías */
+.dropdown-menu .submenu-lateral {
+  display: block;
+  position: absolute;
+  top: 0;
+  left: 100%;
+  min-width: 180px;
+  background: #f8fafc;
+  border: 1px solid #eee;
+  border-radius: 0.5rem;
+  box-shadow: 0 4px 16px rgba(0,0,0,0.10);
+  margin-left: 0.25rem;
+  padding: 0.5rem 0.5rem 0.5rem 0.75rem;
+}
+.dropdown-menu ul {
+  background: none;
+  border-radius: 0;
+  margin-top: 0;
+  padding-left: 0;
+}
+
+

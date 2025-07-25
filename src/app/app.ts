@@ -1,5 +1,21 @@
 import { Component } from '@angular/core';
 import { RouterOutlet, RouterLink } from '@angular/router';
+import { CommonModule } from '@angular/common';
+import { Router } from '@angular/router';
+import { Injectable } from '@angular/core';
+import { BehaviorSubject } from 'rxjs';
+
+@Injectable({
+  providedIn: 'root'
+})
+export class SubcategoriaService {
+  private subcategoriaSeleccionada = new BehaviorSubject<string | null>(null);
+  subcategoria$ = this.subcategoriaSeleccionada.asObservable();
+
+  seleccionarSubcategoria(sub: string) {
+    this.subcategoriaSeleccionada.next(sub);
+  }
+}
 
 @Component({
   selector: 'app-root',
@@ -16,12 +32,25 @@ import { RouterOutlet, RouterLink } from '@angular/router';
         </button>
         <div class="collapse navbar-collapse" id="navbarNav">
           <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-            <li class="nav-item">
-              <a class="nav-link" routerLink="/inicio">Inicio</a>
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" id="categoriasDropdown" role="button" href="#" (click)="$event.preventDefault(); mostrarCategorias = !mostrarCategorias" [attr.aria-expanded]="mostrarCategorias">
+                Categoría
+              </a>
+              <ul class="dropdown-menu" [class.show]="mostrarCategorias" aria-labelledby="categoriasDropdown" style="min-width: 260px;">
+                <li *ngFor="let cat of categorias" class="position-relative">
+                  <a class="dropdown-item" href="#" (click)="$event.preventDefault(); seleccionarCategoria(cat)">
+                    {{ cat.nombre }}
+                  </a>
+                  <!-- Submenú lateral: solo para la categoría seleccionada -->
+                  <ul *ngIf="cat.subcategorias && cat === categoriaSeleccionada" class="submenu-lateral list-unstyled">
+                    <li *ngFor="let sub of cat.subcategorias">
+                      <a class="dropdown-item small" href="#" (click)="$event.preventDefault(); mostrarProductosDeSubcategoria(sub)">{{ sub }}</a>
+                    </li>
+                  </ul>
+                </li>
+              </ul>
             </li>
-            <li class="nav-item">
-              <a class="nav-link" routerLink="/productos">Productos</a>
-            </li>
+
             <li class="nav-item">
               <a class="nav-link" routerLink="/ofertas">Ofertas</a>
             </li>
@@ -45,37 +74,56 @@ import { RouterOutlet, RouterLink } from '@angular/router';
     </div>
     <footer class="bg-warning bg-gradient text-dark mt-5 pt-4 pb-2 border-top shadow-sm">
       <div class="container-fluid px-2 px-md-4">
-        <div class="row text-center text-md-start">
-          <div class="col-12 col-md-4 mb-3 mb-md-0">
-            <h5 class="fw-bold">Menú rápido</h5>
-            <ul class="list-unstyled">
-              <li><a routerLink="/inicio" class="text-dark text-decoration-none">Inicio</a></li>
-              <li><a routerLink="/productos" class="text-dark text-decoration-none">Productos</a></li>
-              <li><a routerLink="/ofertas" class="text-dark text-decoration-none">Ofertas</a></li>
-              <li><a routerLink="/marcas" class="text-dark text-decoration-none">Marcas</a></li>
-              <li><a routerLink="/contacto" class="text-dark text-decoration-none">Contacto</a></li>
-            </ul>
-          </div>
-          <div class="col-12 col-md-4 mb-3 mb-md-0">
-            <h5 class="fw-bold">Redes sociales</h5>
-            <a href="https://facebook.com" target="_blank" class="me-2 text-dark"><i class="bi bi-facebook fs-4"></i></a>
-            <a href="https://instagram.com" target="_blank" class="me-2 text-dark"><i class="bi bi-instagram fs-4"></i></a>
-            <a href="https://wa.me/5491123456789" target="_blank" class="text-dark"><i class="bi bi-whatsapp fs-4"></i></a>
-          </div>
-          <div class="col-12 col-md-4">
-            <h5 class="fw-bold">Contacto</h5>
-            <p class="mb-1"><i class="bi bi-geo-alt-fill me-1"></i> Av. Siempreviva 123, CABA</p>
-            <p class="mb-1"><i class="bi bi-envelope-fill me-1"></i> info&#64;jugueteria.com</p>
-            <p class="mb-0"><i class="bi bi-telephone-fill me-1"></i> (011) 1234-5678</p>
-          </div>
-        </div>
         <div class="text-center mt-3 small">
           &copy; 2024 Juguetería. Todos los derechos reservados.
         </div>
       </div>
     </footer>
+    <a href="https://wa.me/5491123456789" target="_blank" class="whatsapp-float" aria-label="Contactar por WhatsApp">
+      <svg width="56" height="56" viewBox="0 0 56 56" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <circle cx="28" cy="28" r="28" fill="#25D366"/>
+        <path d="M39.5 34.5c-1.1 2.1-3.2 3.5-5.7 3.5-4.2 0-9.3-3.7-12.1-8.2-2.8-4.5-2.7-8.7 0.2-10.8 1.2-0.9 2.7-1.1 4.1-0.6l2.1 0.7c0.5 0.2 0.8 0.7 0.7 1.2l-0.5 2.2c-0.1 0.5-0.5 0.8-1 0.8-0.2 0-0.4 0-0.6-0.1-0.7-0.2-1.4-0.3-2-0.3-0.5 0-1 0.4-1.1 0.9-0.2 0.7 0.2 1.7 1.1 2.8 1.2 1.5 3.1 3.2 4.7 3.8 0.7 0.3 1.3 0.2 1.7-0.3l1.2-1.5c0.3-0.4 0.9-0.5 1.3-0.2l2.1 1.2c0.4 0.2 0.6 0.7 0.4 1.1z" fill="#fff"/>
+      </svg>
+    </a>
   `,
   styleUrls: ['./app.css'],
-  imports: [RouterOutlet, RouterLink],
+  imports: [RouterOutlet, RouterLink, CommonModule],
 })
-export class AppComponent {}
+export class AppComponent {
+  constructor(private router: Router, private subcategoriaService: SubcategoriaService) {}
+  mostrarCategorias = false;
+  categoriaSeleccionada: any = null;
+  categorias = [
+    { nombre: 'Aire libre', subcategorias: ['Juegos de patio', 'Piscinas', 'Deportes'] },
+    { nombre: 'Artes', subcategorias: ['Pintura', 'Dibujo', 'Manualidades'] },
+    { nombre: 'Manualidades y libros', subcategorias: ['Libros', 'Origami', 'Recortables'] },
+    { nombre: 'Disfraces y accesorios', subcategorias: ['Disfraces', 'Sombreros', 'Máscaras'] },
+    { nombre: 'Electrónica', subcategorias: ['Robótica', 'Juguetes electrónicos'] },
+    { nombre: 'Bebés y primera infancia', subcategorias: ['Sonajeros', 'Juguetes blandos'] },
+    { nombre: 'Figuras de acción y muñecos', subcategorias: ['Superhéroes', 'Animales', 'Muñecos'] },
+    { nombre: 'Juegos de mesa y salón', subcategorias: ['Cartas', 'Tableros', 'Dados'] },
+    { nombre: 'Jugando a ser grande', subcategorias: ['Cocinitas', 'Herramientas', 'Oficio'] },
+    { nombre: 'Ladrillos y bloques', subcategorias: ['Lego', 'Mega Bloks', 'Bloques madera'] },
+    { nombre: 'Muñecas, bebotes y ponys', subcategorias: ['Muñecas', 'Bebotes', 'Ponys'] },
+    { nombre: 'Para la escuela', subcategorias: ['Mochilas', 'Cartucheras', 'Útiles'] },
+    { nombre: 'Peluches', subcategorias: ['Animales', 'Gigantes', 'Pequeños'] },
+    { nombre: 'Pistas y vehículos', subcategorias: ['Autos', 'Trenes', 'Pistas armables'] },
+    { nombre: 'Pistolas, espadas y lanzadardos', subcategorias: ['Pistolas', 'Espadas', 'Lanzadardos'] },
+    { nombre: 'Rodados', subcategorias: ['Bicicletas', 'Triciclos', 'Monopatines'] },
+    { nombre: 'Bazar', subcategorias: ['Vajilla infantil', 'Juguetes cocina'] },
+  ];
+
+  seleccionarCategoria(cat: any) {
+    this.categoriaSeleccionada = this.categoriaSeleccionada === cat ? null : cat;
+  }
+
+  mostrarProductosDeSubcategoria(sub: string) {
+    this.mostrarCategorias = false;
+    this.categoriaSeleccionada = null;
+    this.router.navigate(['/inicio']);
+    // Usar el servicio para comunicar la selección
+    setTimeout(() => {
+      this.subcategoriaService.seleccionarSubcategoria(sub);
+    }, 100);
+  }
+}

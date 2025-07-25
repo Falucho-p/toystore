@@ -1,2 +1,57 @@
+/* Animaciones y efectos visuales para la juguetería */
 @import 'bootstrap/dist/css/bootstrap.min.css';
-/* You can add global styles to this file, and also import other style files */
+
+/* Efecto hover en cards */
+.card, .product-card {
+  transition: box-shadow 0.3s, transform 0.3s;
+}
+.card:hover, .product-card:hover {
+  box-shadow: 0 0.5rem 2rem rgba(0,123,255,0.18) !important;
+  transform: scale(1.04) translateY(-4px);
+  z-index: 2;
+}
+
+/* Efecto hover en botones */
+.btn, .btn-lg, .btn-sm {
+  transition: box-shadow 0.2s, transform 0.2s;
+}
+.btn:hover, .btn:focus {
+  box-shadow: 0 0.5rem 1.5rem rgba(220,53,69,0.18);
+  transform: translateY(-2px) scale(1.03);
+}
+
+/* Animación de entrada fade-slide */
+.animate-fade-slide {
+  opacity: 0;
+  transform: translateY(30px);
+  animation: fadeSlideIn 0.8s cubic-bezier(.4,1.4,.6,1) forwards;
+}
+@keyframes fadeSlideIn {
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+/* Animación para banners */
+.banner-animado {
+  animation: fadeSlideIn 1s cubic-bezier(.4,1.4,.6,1) both;
+}
+
+body {
+  background: linear-gradient(135deg, #f8fafc 0%, #ffe7fb 100%);
+  min-height: 100vh;
+  position: relative;
+  font-family: 'Baloo 2', 'Comic Sans MS', cursive, sans-serif;
+}
+
+/* Eliminar decorativos de fondo */
+body::before, body::after, body::backdrop, body::marker {
+  display: none !important;
+}
+
+/* Mejorar títulos principales */
+h1, h2, h3, .display-4 {
+  font-family: 'Baloo 2', 'Comic Sans MS', cursive, sans-serif;
+  letter-spacing: 1px;
+}
