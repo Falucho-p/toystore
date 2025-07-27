@@ -2,20 +2,8 @@ import { Component } from '@angular/core';
 import { RouterOutlet, RouterLink } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
-import { Injectable } from '@angular/core';
-import { BehaviorSubject } from 'rxjs';
-
-@Injectable({
-  providedIn: 'root'
-})
-export class SubcategoriaService {
-  private subcategoriaSeleccionada = new BehaviorSubject<string | null>(null);
-  subcategoria$ = this.subcategoriaSeleccionada.asObservable();
-
-  seleccionarSubcategoria(sub: string) {
-    this.subcategoriaSeleccionada.next(sub);
-  }
-}
+import { FormsModule } from '@angular/forms';
+import { SubcategoriaService, BusquedaService } from './services';
 
 @Component({
   selector: 'app-root',
@@ -33,7 +21,7 @@ export class SubcategoriaService {
         <div class="collapse navbar-collapse" id="navbarNav">
           <ul class="navbar-nav me-auto mb-2 mb-lg-0">
             <li class="nav-item dropdown">
-              <a class="nav-link dropdown-toggle" id="categoriasDropdown" role="button" href="#" (click)="$event.preventDefault(); mostrarCategorias = !mostrarCategorias" [attr.aria-expanded]="mostrarCategorias">
+              <a class="nav-link dropdown-toggle" id="categoriasDropdown" role="button" href="#" (click)="$event.preventDefault(); toggleCategorias()" [attr.aria-expanded]="mostrarCategorias">
                 Categoría
               </a>
               <ul class="dropdown-menu" [class.show]="mostrarCategorias" aria-labelledby="categoriasDropdown" style="min-width: 260px;">
@@ -61,8 +49,16 @@ export class SubcategoriaService {
               <a class="nav-link" routerLink="/contacto">Contacto</a>
             </li>
           </ul>
-          <form class="d-flex mt-2 mt-lg-0" role="search" style="max-width:300px;">
-            <input class="form-control me-2" type="search" placeholder="Buscar juguetes..." aria-label="Buscar">
+          <form class="d-flex mt-2 mt-lg-0" role="search" style="max-width:300px;" (ngSubmit)="realizarBusqueda()">
+            <input 
+              class="form-control me-2" 
+              type="search" 
+              placeholder="Buscar por marca, nombre o tipo..." 
+              aria-label="Buscar"
+              [(ngModel)]="terminoBusqueda"
+              (keyup.enter)="realizarBusqueda()"
+              (input)="onBusquedaInput()"
+              name="busqueda">
             <button class="btn btn-warning" type="submit"><i class="bi bi-search"></i></button>
           </form>
         </div>
@@ -87,10 +83,35 @@ export class SubcategoriaService {
     </a>
   `,
   styleUrls: ['./app.css'],
-  imports: [RouterOutlet, RouterLink, CommonModule],
+  imports: [RouterOutlet, RouterLink, CommonModule, FormsModule],
 })
 export class AppComponent {
-  constructor(private router: Router, private subcategoriaService: SubcategoriaService) {}
+  terminoBusqueda: string = '';
+
+  constructor(private router: Router, private subcategoriaService: SubcategoriaService, private busquedaService: BusquedaService) {
+    // Limpiar subcategoría cuando se navega a otras rutas
+    this.router.events.subscribe(() => {
+      const currentUrl = this.router.url;
+      if (currentUrl !== '/inicio') {
+        this.subcategoriaService.seleccionarSubcategoria(null);
+      }
+    });
+  }
+
+  realizarBusqueda() {
+    if (this.terminoBusqueda.trim()) {
+      // Usar el servicio directamente
+      this.busquedaService.realizarBusqueda(this.terminoBusqueda.trim());
+      this.router.navigate(['/inicio']);
+    }
+  }
+
+  onBusquedaInput() {
+    // Búsqueda en tiempo real (opcional)
+    if (this.terminoBusqueda.trim().length >= 2) {
+      // Puedes implementar búsqueda en tiempo real aquí si quieres
+    }
+  }
   mostrarCategorias = false;
   categoriaSeleccionada: any = null;
   categorias = [
@@ -113,17 +134,36 @@ export class AppComponent {
     { nombre: 'Bazar', subcategorias: ['Vajilla infantil', 'Juguetes cocina'] },
   ];
 
+  toggleCategorias() {
+    this.mostrarCategorias = !this.mostrarCategorias;
+    // Si cerramos el dropdown, también limpiamos la categoría seleccionada
+    if (!this.mostrarCategorias) {
+      this.categoriaSeleccionada = null;
+    }
+    console.log('Dropdown categorías:', this.mostrarCategorias ? 'abierto' : 'cerrado');
+  }
+
   seleccionarCategoria(cat: any) {
-    this.categoriaSeleccionada = this.categoriaSeleccionada === cat ? null : cat;
+    // Si ya está seleccionada, la deseleccionamos
+    if (this.categoriaSeleccionada === cat) {
+      this.categoriaSeleccionada = null;
+    } else {
+      // Si es una categoría diferente, la seleccionamos
+      this.categoriaSeleccionada = cat;
+    }
+    console.log('Categoría seleccionada:', this.categoriaSeleccionada?.nombre);
   }
 
   mostrarProductosDeSubcategoria(sub: string) {
-    this.mostrarCategorias = false;
-    this.categoriaSeleccionada = null;
+    console.log('Seleccionando subcategoría:', sub);
+    // Seleccionar la subcategoría primero
+    this.subcategoriaService.seleccionarSubcategoria(sub);
+    // Navegar a inicio
     this.router.navigate(['/inicio']);
-    // Usar el servicio para comunicar la selección
+    // Cerrar el dropdown después de un pequeño delay
     setTimeout(() => {
-      this.subcategoriaService.seleccionarSubcategoria(sub);
+      this.mostrarCategorias = false;
+      this.categoriaSeleccionada = null;
     }, 100);
   }
 }

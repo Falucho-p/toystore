@@ -58,4 +58,32 @@
   padding-left: 0;
 }
 
+/* Estilos para el buscador */
+.form-control:focus {
+  border-color: #ffc107;
+  box-shadow: 0 0 0 0.2rem rgba(255, 193, 7, 0.25);
+}
+
+/* Animación para resultados de búsqueda */
+.search-results {
+  animation: fadeInUp 0.5s ease-out;
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Mejorar la apariencia de las cards en búsqueda */
+.card .text-warning {
+  font-size: 0.85rem;
+  font-weight: 500;
+}
+
 
