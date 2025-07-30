@@ -3,7 +3,7 @@ import { RouterOutlet, RouterLink } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
 import { FormsModule } from '@angular/forms';
-import { SubcategoriaService, BusquedaService } from './services';
+import { SubcategoriaService, BusquedaService, CarritoService } from './services';
 
 @Component({
   selector: 'app-root',
@@ -46,10 +46,13 @@ import { SubcategoriaService, BusquedaService } from './services';
               <a class="nav-link" routerLink="/marcas">Marcas</a>
             </li>
             <li class="nav-item">
+              <a class="nav-link" routerLink="/acerca">Acerca de</a>
+            </li>
+            <li class="nav-item">
               <a class="nav-link" routerLink="/contacto">Contacto</a>
             </li>
           </ul>
-          <form class="d-flex mt-2 mt-lg-0" role="search" style="max-width:300px;" (ngSubmit)="realizarBusqueda()">
+          <form class="d-flex mt-2 mt-lg-0 me-3" role="search" style="max-width:300px;" (ngSubmit)="realizarBusqueda()">
             <input 
               class="form-control me-2" 
               type="search" 
@@ -61,6 +64,12 @@ import { SubcategoriaService, BusquedaService } from './services';
               name="busqueda">
             <button class="btn btn-warning" type="submit"><i class="bi bi-search"></i></button>
           </form>
+          <a class="btn btn-outline-light position-relative" routerLink="/carrito" aria-label="Carrito de compras">
+            <i class="bi bi-cart3"></i>
+            <span *ngIf="cantidadCarrito > 0" class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-warning text-dark">
+              {{ cantidadCarrito }}
+            </span>
+          </a>
         </div>
       </div>
     </nav>
@@ -87,14 +96,20 @@ import { SubcategoriaService, BusquedaService } from './services';
 })
 export class AppComponent {
   terminoBusqueda: string = '';
+  cantidadCarrito: number = 0;
 
-  constructor(private router: Router, private subcategoriaService: SubcategoriaService, private busquedaService: BusquedaService) {
+  constructor(private router: Router, private subcategoriaService: SubcategoriaService, private busquedaService: BusquedaService, private carritoService: CarritoService) {
     // Limpiar subcategoría cuando se navega a otras rutas
     this.router.events.subscribe(() => {
       const currentUrl = this.router.url;
       if (currentUrl !== '/inicio') {
         this.subcategoriaService.seleccionarSubcategoria(null);
       }
+    });
+
+    // Suscribirse a cambios en el carrito
+    this.carritoService.carrito$.subscribe(carrito => {
+      this.cantidadCarrito = this.carritoService.obtenerCantidadTotal();
     });
   }
 

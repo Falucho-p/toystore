@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ActivatedRoute, RouterLink } from '@angular/router';
+import { CarritoService, Producto } from '../services';
 
 const PRODUCTOS = [
   { nombre: 'Auto de Carrera', descripcion: 'Auto a control remoto.', marca: 'Hot Wheels', precio: 1500, imagen: 'https://images.unsplash.com/photo-1519125323398-675f0ddb6308?auto=format&fit=crop&w=400&q=80' },
@@ -41,7 +42,7 @@ const PRODUCTOS = [
               <h5 class="mb-2 text-secondary">Marca: {{ producto.marca }}</h5>
               <p class="fs-4 text-success mb-3">Precio: &#36;{{ producto.precio }}</p>
               <p class="mb-4">{{ producto.descripcion }}</p>
-              <button class="btn btn-warning btn-lg fw-bold w-100"><i class="bi bi-cart-plus"></i> Agregar al carrito</button>
+              <button class="btn btn-warning btn-lg fw-bold w-100" (click)="agregarAlCarrito()"><i class="bi bi-cart-plus"></i> Agregar al carrito</button>
             </div>
           </div>
         </div>
@@ -69,7 +70,7 @@ const PRODUCTOS = [
 export class DetalleProductoComponent {
   producto = PRODUCTOS[0];
   relacionados: any[] = [];
-  constructor(private route: ActivatedRoute) {
+  constructor(private route: ActivatedRoute, private carritoService: CarritoService) {
     const id = Number(this.route.snapshot.paramMap.get('id'));
     if (!isNaN(id) && PRODUCTOS[id]) {
       this.producto = PRODUCTOS[id];
@@ -79,5 +80,17 @@ export class DetalleProductoComponent {
         .sort(() => 0.5 - Math.random())
         .slice(0, 3);
     }
+  }
+
+  agregarAlCarrito() {
+    const productoParaCarrito: Producto = {
+      id: PRODUCTOS.indexOf(this.producto),
+      nombre: this.producto.nombre,
+      marca: this.producto.marca,
+      precio: this.producto.precio,
+      imagen: this.producto.imagen
+    };
+    this.carritoService.agregarProducto(productoParaCarrito);
+    alert('¡Producto agregado al carrito!');
   }
 } 

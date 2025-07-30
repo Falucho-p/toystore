@@ -1,7 +1,7 @@
 import { Component, Input, OnInit, OnDestroy, ChangeDetectorRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterLink, ActivatedRoute, Router } from '@angular/router';
-import { SubcategoriaService, BusquedaService } from '../services';
+import { SubcategoriaService, BusquedaService, CarritoService, Producto } from '../services';
 import { Subscription } from 'rxjs';
 
 @Component({
@@ -103,6 +103,9 @@ import { Subscription } from 'rxjs';
                 <h3 class="card-title text-info fw-bold fs-5">{{ producto.nombre }}</h3>
                 <p class="card-text mb-1"><strong>Marca:</strong> <span class="text-secondary">{{ producto.marca }}</span></p>
                 <p class="card-text fs-5 mb-2"><strong>Precio:</strong> <span class="text-success">&#36;{{ producto.precio }}</span></p>
+                <button class="btn btn-warning fw-bold mt-auto" (click)="agregarAlCarrito(producto)">
+                  <i class="bi bi-cart-plus"></i> Agregar al carrito
+                </button>
               </div>
             </div>
           </div>
@@ -121,6 +124,9 @@ import { Subscription } from 'rxjs';
                 <h3 class="card-title text-info fw-bold fs-5">{{ producto.nombre }}</h3>
                 <p class="card-text mb-1"><strong>Marca:</strong> <span class="text-secondary">{{ producto.marca }}</span></p>
                 <p class="card-text fs-5 mb-2"><strong>Precio:</strong> <span class="text-success">&#36;{{ producto.precio }}</span></p>
+                <button class="btn btn-warning fw-bold mt-auto" (click)="agregarAlCarritoFiltrado(producto)">
+                  <i class="bi bi-cart-plus"></i> Agregar al carrito
+                </button>
               </div>
             </div>
           </div>
@@ -144,6 +150,9 @@ import { Subscription } from 'rxjs';
                 <p class="card-text mb-1"><strong>Marca:</strong> <span class="text-secondary">{{ producto.marca }}</span></p>
                 <p class="card-text mb-1"><strong>Categoría:</strong> <span class="text-warning">{{ producto.categoria }}</span></p>
                 <p class="card-text fs-5 mb-2"><strong>Precio:</strong> <span class="text-success">&#36;{{ producto.precio }}</span></p>
+                <button class="btn btn-warning fw-bold mt-auto" (click)="agregarAlCarritoFiltrado(producto)">
+                  <i class="bi bi-cart-plus"></i> Agregar al carrito
+                </button>
               </div>
             </div>
           </div>
@@ -805,6 +814,7 @@ export class InicioComponent implements OnInit, OnDestroy {
   constructor(
     private subcategoriaService: SubcategoriaService, 
     private busquedaService: BusquedaService,
+    private carritoService: CarritoService,
     private route: ActivatedRoute,
     private router: Router,
     private cdr: ChangeDetectorRef
@@ -895,5 +905,29 @@ export class InicioComponent implements OnInit, OnDestroy {
     // Tomar entre 8 y 12 (si hay menos de 8, muestra todos; si hay más de 12, solo 12)
     const cantidad = Math.min(Math.max(8, mezclados.length), 12);
     this.productosFiltrados = mezclados.slice(0, cantidad);
+  }
+
+  agregarAlCarrito(producto: any) {
+    const productoParaCarrito: Producto = {
+      id: this.destacados.indexOf(producto),
+      nombre: producto.nombre,
+      marca: producto.marca,
+      precio: producto.precio,
+      imagen: producto.imagen
+    };
+    this.carritoService.agregarProducto(productoParaCarrito);
+    alert('¡Producto agregado al carrito!');
+  }
+
+  agregarAlCarritoFiltrado(producto: any) {
+    const productoParaCarrito: Producto = {
+      id: this.productos.indexOf(producto),
+      nombre: producto.nombre,
+      marca: producto.marca,
+      precio: producto.precio,
+      imagen: producto.imagen
+    };
+    this.carritoService.agregarProducto(productoParaCarrito);
+    alert('¡Producto agregado al carrito!');
   }
 } 

@@ -1,0 +1,80 @@
+<div class="container py-5">
+  <h1 class="text-primary fw-bold mb-4 text-center">Carrito de Compras</h1>
+  
+  <div *ngIf="(carrito$ | async)?.length === 0" class="text-center py-5">
+    <i class="bi bi-cart-x display-1 text-muted"></i>
+    <h3 class="text-muted mt-3">Tu carrito está vacío</h3>
+    <p class="text-muted">Agrega algunos productos para comenzar a comprar</p>
+    <button class="btn btn-primary" routerLink="/inicio">Ir al inicio</button>
+  </div>
+
+  <div *ngIf="(carrito$ | async) && (carrito$ | async)!.length > 0">
+    <div class="row">
+      <div class="col-lg-8">
+        <div class="card shadow border-0">
+          <div class="card-header bg-primary text-white">
+            <h5 class="mb-0">Productos en el carrito</h5>
+          </div>
+          <div class="card-body">
+            <div *ngFor="let item of carrito$ | async" class="row align-items-center mb-3 pb-3 border-bottom">
+              <div class="col-md-2">
+                <img [src]="item.producto.imagen" [alt]="item.producto.nombre" class="img-fluid rounded" style="max-height: 80px; object-fit: cover;">
+              </div>
+              <div class="col-md-4">
+                <h6 class="mb-1">{{ item.producto.nombre }}</h6>
+                <small class="text-muted">{{ item.producto.marca }}</small>
+              </div>
+              <div class="col-md-2 text-center">
+                <span class="fw-bold text-success">${{ item.producto.precio }}</span>
+              </div>
+              <div class="col-md-2 text-center">
+                <div class="input-group input-group-sm">
+                  <button class="btn btn-outline-secondary" (click)="actualizarCantidad(item.producto.id, item.cantidad - 1)">-</button>
+                  <input #cantidadInput type="number" class="form-control text-center" [value]="item.cantidad" min="1" (change)="actualizarCantidad(item.producto.id, +cantidadInput.value)">
+                  <button class="btn btn-outline-secondary" (click)="actualizarCantidad(item.producto.id, item.cantidad + 1)">+</button>
+                </div>
+              </div>
+              <div class="col-md-2 text-center">
+                <span class="fw-bold">${{ item.producto.precio * item.cantidad }}</span>
+              </div>
+              <div class="col-md-1 text-center">
+                <button class="btn btn-outline-danger btn-sm" (click)="removerProducto(item.producto.id)">
+                  <i class="bi bi-trash"></i>
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <div class="col-lg-4">
+        <div class="card shadow border-0">
+          <div class="card-header bg-success text-white">
+            <h5 class="mb-0">Resumen de compra</h5>
+          </div>
+          <div class="card-body">
+            <div class="d-flex justify-content-between mb-2">
+              <span>Subtotal:</span>
+              <span>${{ obtenerSubtotal() }}</span>
+            </div>
+            <div class="d-flex justify-content-between mb-2">
+              <span>Envío:</span>
+              <span>${{ obtenerEnvio() }}</span>
+            </div>
+            <hr>
+            <div class="d-flex justify-content-between mb-3">
+              <strong>Total:</strong>
+              <strong class="text-success fs-5">${{ obtenerTotal() }}</strong>
+            </div>
+            <button class="btn btn-success w-100 mb-2" (click)="finalizarCompra()">
+              <i class="bi bi-credit-card"></i> Finalizar Compra
+            </button>
+            <button class="btn btn-outline-primary w-100" routerLink="/inicio">
+              <i class="bi bi-arrow-left"></i> Seguir Comprando
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div> 

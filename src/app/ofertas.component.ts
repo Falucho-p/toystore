@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { CarritoService, Producto } from './services';
 
 @Component({
   selector: 'app-ofertas',
@@ -20,7 +21,7 @@ import { CommonModule } from '@angular/common';
                 <span class="text-muted text-decoration-line-through">&#36;{{ producto.precioOriginal }}</span>
                 <span class="fs-5 text-success ms-2">&#36;{{ producto.precioOferta }}</span>
               </p>
-              <button class="btn btn-warning fw-bold mt-auto"><i class="bi bi-cart-plus"></i> Agregar al carrito</button>
+              <button class="btn btn-warning fw-bold mt-auto" (click)="agregarAlCarrito(producto)"><i class="bi bi-cart-plus"></i> Agregar al carrito</button>
             </div>
           </div>
         </div>
@@ -29,10 +30,24 @@ import { CommonModule } from '@angular/common';
   `
 })
 export class OfertasComponent {
+  constructor(private carritoService: CarritoService) {}
+  
   ofertas = [
     { nombre: 'Auto de Carrera', marca: 'Hot Wheels', precioOriginal: 1500, precioOferta: 1200, imagen: 'https://images.unsplash.com/photo-1519125323398-675f0ddb6308?auto=format&fit=crop&w=400&q=80' },
     { nombre: 'Muñeca', marca: 'Barbie', precioOriginal: 1200, precioOferta: 950, imagen: 'https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=400&q=80' },
     { nombre: 'Bloques de Construcción', marca: 'Lego', precioOriginal: 1800, precioOferta: 1450, imagen: 'https://images.unsplash.com/photo-1464983953574-0892a716854b?auto=format&fit=crop&w=400&q=80' },
     { nombre: 'Peluche', marca: 'Fisher-Price', precioOriginal: 950, precioOferta: 700, imagen: 'https://images.unsplash.com/photo-1517935706615-2717063c2225?auto=format&fit=crop&w=400&q=80' }
   ];
+
+  agregarAlCarrito(producto: any) {
+    const productoParaCarrito: Producto = {
+      id: this.ofertas.indexOf(producto),
+      nombre: producto.nombre,
+      marca: producto.marca,
+      precio: producto.precioOferta,
+      imagen: producto.imagen
+    };
+    this.carritoService.agregarProducto(productoParaCarrito);
+    alert('¡Producto agregado al carrito!');
+  }
 } 
