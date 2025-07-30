@@ -144,9 +144,7 @@ Este proyecto está bajo la Licencia MIT. Ver el archivo `LICENSE` para más det
 ## 📞 Contacto
 
 Para consultas sobre el proyecto:
-- Email: info@jugueteria.com
-- Teléfono: (011) 1234-5678
-- Dirección: Av. Siempreviva 123, CABA
+- Email: pueblasa08@gmail.com
 
 ---
 
