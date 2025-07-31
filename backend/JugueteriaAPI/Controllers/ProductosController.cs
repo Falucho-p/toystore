@@ -116,5 +116,60 @@ namespace JugueteriaAPI.Controllers
             await _productoService.DeleteProductoAsync(id);
             return NoContent();
         }
+
+        // GET: api/Productos/destacados
+        [HttpGet("destacados")]
+        public async Task<ActionResult<IEnumerable<Producto>>> GetProductosDestacados()
+        {
+            var productos = await _productoService.GetProductosDestacadosAsync();
+            return Ok(productos);
+        }
+
+        // GET: api/Productos/edad/6-12
+        [HttpGet("edad/{edadRecomendada}")]
+        public async Task<ActionResult<IEnumerable<Producto>>> GetProductosPorEdad(string edadRecomendada)
+        {
+            var productos = await _productoService.GetProductosPorEdadAsync(edadRecomendada);
+            return Ok(productos);
+        }
+
+        // GET: api/Productos/marca/lego
+        [HttpGet("marca/{marca}")]
+        public async Task<ActionResult<IEnumerable<Producto>>> GetProductosPorMarca(string marca)
+        {
+            var productos = await _productoService.GetProductosPorMarcaAsync(marca);
+            return Ok(productos);
+        }
+
+        // GET: api/Productos/precio?min=1000&max=2000
+        [HttpGet("precio")]
+        public async Task<ActionResult<IEnumerable<Producto>>> GetProductosPorPrecio([FromQuery] decimal min, [FromQuery] decimal max)
+        {
+            if (min > max)
+                return BadRequest("El precio mínimo no puede ser mayor al máximo");
+
+            var productos = await _productoService.GetProductosPorPrecioAsync(min, max);
+            return Ok(productos);
+        }
+
+        // PUT: api/Productos/5/stock
+        [HttpPut("{id}/stock")]
+        public async Task<IActionResult> UpdateStock(int id, [FromBody] int cantidad)
+        {
+            var exists = await _productoService.ProductoExistsAsync(id);
+            if (!exists)
+                return NotFound();
+
+            await _productoService.UpdateStockAsync(id, cantidad);
+            return NoContent();
+        }
+
+        // GET: api/Productos/bajo-stock?minimo=5
+        [HttpGet("bajo-stock")]
+        public async Task<ActionResult<IEnumerable<Producto>>> GetProductosBajoStock([FromQuery] int minimo = 5)
+        {
+            var productos = await _productoService.GetProductosBajoStockAsync(minimo);
+            return Ok(productos);
+        }
     }
 } 

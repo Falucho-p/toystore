@@ -8,6 +8,9 @@ export interface Producto {
   precio: number;
   imagen: string;
   categoria?: string;
+  edadRecomendada?: string;
+  stock?: number;
+  descripcion?: string;
 }
 
 export interface ItemCarrito {
@@ -95,5 +98,64 @@ export class CarritoService {
 
   limpiarCarrito() {
     this.carrito.next([]);
+  }
+} 
+
+@Injectable({
+  providedIn: 'root'
+})
+export class WishlistService {
+  private wishlist = new BehaviorSubject<Producto[]>([]);
+  wishlist$ = this.wishlist.asObservable();
+
+  agregarAWishlist(producto: Producto) {
+    const wishlistActual = this.wishlist.value;
+    if (!wishlistActual.find(item => item.id === producto.id)) {
+      this.wishlist.next([...wishlistActual, producto]);
+    }
+  }
+
+  removerDeWishlist(id: number) {
+    const wishlistActual = this.wishlist.value;
+    this.wishlist.next(wishlistActual.filter(item => item.id !== id));
+  }
+
+  estaEnWishlist(id: number): boolean {
+    return this.wishlist.value.some(item => item.id === id);
+  }
+
+  obtenerCantidad(): number {
+    return this.wishlist.value.length;
+  }
+}
+
+@Injectable({
+  providedIn: 'root'
+})
+export class FiltrosService {
+  private filtroEdad = new BehaviorSubject<string>('');
+  private filtroPrecio = new BehaviorSubject<{min: number, max: number}>({min: 0, max: 999999});
+  private filtroMarca = new BehaviorSubject<string>('');
+
+  filtroEdad$ = this.filtroEdad.asObservable();
+  filtroPrecio$ = this.filtroPrecio.asObservable();
+  filtroMarca$ = this.filtroMarca.asObservable();
+
+  setFiltroEdad(edad: string) {
+    this.filtroEdad.next(edad);
+  }
+
+  setFiltroPrecio(min: number, max: number) {
+    this.filtroPrecio.next({min, max});
+  }
+
+  setFiltroMarca(marca: string) {
+    this.filtroMarca.next(marca);
+  }
+
+  limpiarFiltros() {
+    this.filtroEdad.next('');
+    this.filtroPrecio.next({min: 0, max: 999999});
+    this.filtroMarca.next('');
   }
 } 

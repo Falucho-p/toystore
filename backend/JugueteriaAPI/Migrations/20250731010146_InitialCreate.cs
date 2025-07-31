@@ -176,11 +176,11 @@ namespace JugueteriaAPI.Migrations
                 columns: new[] { "Id", "Activo", "Descripcion", "FechaCreacion", "ImagenUrl", "Nombre" },
                 values: new object[,]
                 {
-                    { 1, true, "Juguetes que fomentan el aprendizaje y desarrollo", new DateTime(2025, 7, 30, 0, 59, 48, 157, DateTimeKind.Local).AddTicks(5495), "/images/educativos.jpg", "Juguetes Educativos" },
-                    { 2, true, "Bloques, legos y sets de construcción", new DateTime(2025, 7, 30, 0, 59, 48, 157, DateTimeKind.Local).AddTicks(6236), "/images/construccion.jpg", "Juguetes de Construcción" },
-                    { 3, true, "Muñecas, peluches y accesorios", new DateTime(2025, 7, 30, 0, 59, 48, 157, DateTimeKind.Local).AddTicks(6240), "/images/munecas.jpg", "Muñecas y Accesorios" },
-                    { 4, true, "Juguetes con tecnología y electrónica", new DateTime(2025, 7, 30, 0, 59, 48, 157, DateTimeKind.Local).AddTicks(6242), "/images/electronicos.jpg", "Juguetes Electrónicos" },
-                    { 5, true, "Juegos de mesa para toda la familia", new DateTime(2025, 7, 30, 0, 59, 48, 157, DateTimeKind.Local).AddTicks(6243), "/images/mesa.jpg", "Juegos de Mesa" }
+                    { 1, true, "Juguetes que fomentan el aprendizaje y desarrollo", new DateTime(2025, 7, 30, 21, 45, 36, 0, DateTimeKind.Unspecified), "/images/educativos.jpg", "Juguetes Educativos" },
+                    { 2, true, "Bloques, legos y sets de construcción", new DateTime(2025, 7, 30, 21, 45, 36, 0, DateTimeKind.Unspecified), "/images/construccion.jpg", "Juguetes de Construcción" },
+                    { 3, true, "Muñecas, peluches y accesorios", new DateTime(2025, 7, 30, 21, 45, 36, 0, DateTimeKind.Unspecified), "/images/munecas.jpg", "Muñecas y Accesorios" },
+                    { 4, true, "Juguetes con tecnología y electrónica", new DateTime(2025, 7, 30, 21, 45, 36, 0, DateTimeKind.Unspecified), "/images/electronicos.jpg", "Juguetes Electrónicos" },
+                    { 5, true, "Juegos de mesa para toda la familia", new DateTime(2025, 7, 30, 21, 45, 36, 0, DateTimeKind.Unspecified), "/images/mesa.jpg", "Juegos de Mesa" }
                 });
 
             migrationBuilder.InsertData(
@@ -188,8 +188,8 @@ namespace JugueteriaAPI.Migrations
                 columns: new[] { "Id", "Activo", "Apellido", "Ciudad", "CodigoPostal", "Direccion", "Email", "FechaRegistro", "Nombre", "Telefono" },
                 values: new object[,]
                 {
-                    { 1, true, "Pérez", "Madrid", "28001", "Calle Principal 123", "juan.perez@email.com", new DateTime(2025, 7, 30, 0, 59, 48, 158, DateTimeKind.Local).AddTicks(5101), "Juan", "123456789" },
-                    { 2, true, "García", "Barcelona", "08001", "Avenida Central 456", "maria.garcia@email.com", new DateTime(2025, 7, 30, 0, 59, 48, 158, DateTimeKind.Local).AddTicks(6412), "María", "987654321" }
+                    { 1, true, "Pérez", "Madrid", "28001", "Calle Principal 123", "juan.perez@email.com", new DateTime(2025, 7, 30, 21, 45, 36, 0, DateTimeKind.Unspecified), "Juan", "123456789" },
+                    { 2, true, "García", "Barcelona", "08001", "Avenida Central 456", "maria.garcia@email.com", new DateTime(2025, 7, 30, 21, 45, 36, 0, DateTimeKind.Unspecified), "María", "987654321" }
                 });
 
             migrationBuilder.InsertData(
@@ -197,14 +197,22 @@ namespace JugueteriaAPI.Migrations
                 columns: new[] { "Id", "Activo", "CategoriaId", "Descripcion", "EdadRecomendada", "EnOferta", "FechaCreacion", "ImagenUrl", "Marca", "Nombre", "Precio", "PrecioOferta", "Stock" },
                 values: new object[,]
                 {
-                    { 1, true, 1, "Bloques de colores para aprender formas y colores", "3-6 años", true, new DateTime(2025, 7, 30, 0, 59, 48, 158, DateTimeKind.Local).AddTicks(2361), "/images/bloques.jpg", "EducaKids", "Set de Bloques Educativos", 29.99m, 24.99m, 50 },
-                    { 2, true, 2, "Set de construcción de la ciudad policial", "6-12 años", false, new DateTime(2025, 7, 30, 0, 59, 48, 158, DateTimeKind.Local).AddTicks(4319), "/images/lego-policia.jpg", "LEGO", "Lego City Policía", 45.99m, null, 30 },
-                    { 3, true, 3, "Muñeca Barbie con vestidos elegantes", "3-8 años", true, new DateTime(2025, 7, 30, 0, 59, 48, 158, DateTimeKind.Local).AddTicks(4324), "/images/barbie.jpg", "Mattel", "Muñeca Barbie Fashionista", 19.99m, 15.99m, 25 },
-                    { 4, true, 4, "Robot educativo para aprender programación", "8-14 años", false, new DateTime(2025, 7, 30, 0, 59, 48, 158, DateTimeKind.Local).AddTicks(4326), "/images/robot.jpg", "TechToys", "Robot Programable", 89.99m, null, 15 },
-                    { 5, true, 5, "Versión infantil del clásico juego de mesa", "5-8 años", false, new DateTime(2025, 7, 30, 0, 59, 48, 158, DateTimeKind.Local).AddTicks(4328), "/images/monopoly.jpg", "Hasbro", "Monopoly Junior", 24.99m, null, 40 },
-                    { 6, true, 1, "Puzzle de paisaje para toda la familia", "8+ años", true, new DateTime(2025, 7, 30, 0, 59, 48, 158, DateTimeKind.Local).AddTicks(4330), "/images/puzzle.jpg", "Ravensburger", "Puzzle 1000 Piezas", 34.99m, 29.99m, 20 },
-                    { 7, true, 1, "Set completo de pinturas y pinceles", "6-12 años", false, new DateTime(2025, 7, 30, 0, 59, 48, 158, DateTimeKind.Local).AddTicks(4332), "/images/pinturas.jpg", "ArtCraft", "Set de Pinturas", 39.99m, null, 35 },
-                    { 8, true, 4, "Pista de carreras con coches de control remoto", "4-10 años", true, new DateTime(2025, 7, 30, 0, 59, 48, 158, DateTimeKind.Local).AddTicks(4334), "/images/carrera.jpg", "HotWheels", "Carrera de Coches", 59.99m, 49.99m, 18 }
+                    { 1, true, 4, "Auto de carreras de alta velocidad", "4-8 años", false, new DateTime(2025, 7, 30, 21, 45, 36, 0, DateTimeKind.Unspecified), "https://images.unsplash.com/photo-1519125323398-675f0ddb6308?auto=format&fit=crop&w=400&q=80", "Hot Wheels", "Auto de Carrera", 1500m, null, 25 },
+                    { 2, true, 3, "Muñeca elegante con accesorios", "3-8 años", false, new DateTime(2025, 7, 30, 21, 45, 36, 0, DateTimeKind.Unspecified), "https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=400&q=80", "Barbie", "Muñeca", 1200m, null, 30 },
+                    { 3, true, 2, "Set de bloques para construir", "6-12 años", false, new DateTime(2025, 7, 30, 21, 45, 36, 0, DateTimeKind.Unspecified), "https://images.unsplash.com/photo-1464983953574-0892a716854b?auto=format&fit=crop&w=400&q=80", "Lego", "Bloques de Construcción", 1800m, null, 20 },
+                    { 4, true, 3, "Peluche suave y abrazable", "0-5 años", false, new DateTime(2025, 7, 30, 21, 45, 36, 0, DateTimeKind.Unspecified), "https://images.unsplash.com/photo-1517841905240-472988babdf9?auto=format&fit=crop&w=400&q=80", "Fisher-Price", "Peluche", 950m, null, 40 },
+                    { 5, true, 4, "Auto de carreras de alta velocidad", "4-8 años", true, new DateTime(2025, 7, 30, 21, 45, 36, 0, DateTimeKind.Unspecified), "https://images.unsplash.com/photo-1519125323398-675f0ddb6308?auto=format&fit=crop&w=400&q=80", "Hot Wheels", "Auto de Carrera", 1500m, 1200m, 25 },
+                    { 6, true, 3, "Muñeca elegante con accesorios", "3-8 años", true, new DateTime(2025, 7, 30, 21, 45, 36, 0, DateTimeKind.Unspecified), "https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=400&q=80", "Barbie", "Muñeca", 1200m, 950m, 30 },
+                    { 7, true, 2, "Set de bloques para construir", "6-12 años", true, new DateTime(2025, 7, 30, 21, 45, 36, 0, DateTimeKind.Unspecified), "https://images.unsplash.com/photo-1464983953574-0892a716854b?auto=format&fit=crop&w=400&q=80", "Lego", "Bloques de Construcción", 1800m, 1450m, 20 },
+                    { 8, true, 3, "Peluche suave y abrazable", "0-5 años", true, new DateTime(2025, 7, 30, 21, 45, 36, 0, DateTimeKind.Unspecified), "https://images.unsplash.com/photo-1517935706615-2717063c2225?auto=format&fit=crop&w=400&q=80", "Fisher-Price", "Peluche", 950m, 700m, 40 },
+                    { 9, true, 1, "Puzzle de paisaje para toda la familia", "8+ años", true, new DateTime(2025, 7, 30, 21, 45, 36, 0, DateTimeKind.Unspecified), "https://images.unsplash.com/photo-1519125323398-675f0ddb6308?auto=format&fit=crop&w=400&q=80", "Ravensburger", "Puzzle 1000 Piezas", 2500m, 1800m, 15 },
+                    { 10, true, 4, "Robot educativo para aprender programación", "8-14 años", true, new DateTime(2025, 7, 30, 21, 45, 36, 0, DateTimeKind.Unspecified), "https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=400&q=80", "TechToys", "Robot Programable", 3200m, 2400m, 10 },
+                    { 11, true, 1, "Set completo de pinturas y pinceles", "6-12 años", true, new DateTime(2025, 7, 30, 21, 45, 36, 0, DateTimeKind.Unspecified), "https://images.unsplash.com/photo-1464983953574-0892a716854b?auto=format&fit=crop&w=400&q=80", "Crayola", "Set de Pinturas", 800m, 550m, 35 },
+                    { 12, true, 5, "Juego de mesa para toda la familia", "6+ años", true, new DateTime(2025, 7, 30, 21, 45, 36, 0, DateTimeKind.Unspecified), "https://images.unsplash.com/photo-1517935706615-2717063c2225?auto=format&fit=crop&w=400&q=80", "Hasbro", "Juego de Mesa", 1800m, 1300m, 20 },
+                    { 13, true, 2, "Tobogán colorido para el jardín", "2-8 años", false, new DateTime(2025, 7, 30, 21, 45, 36, 0, DateTimeKind.Unspecified), "https://images.unsplash.com/photo-1519125323398-675f0ddb6308?auto=format&fit=crop&w=400&q=80", "Little Tikes", "Tobogán Arcoíris", 3500m, null, 8 },
+                    { 14, true, 2, "Columpio para dos niños", "3-10 años", false, new DateTime(2025, 7, 30, 21, 45, 36, 0, DateTimeKind.Unspecified), "https://images.unsplash.com/photo-1517935706615-2717063c2225?auto=format&fit=crop&w=400&q=80", "Step2", "Columpio doble", 4200m, null, 5 },
+                    { 15, true, 4, "Pelota oficial de fútbol", "6+ años", false, new DateTime(2025, 7, 30, 21, 45, 36, 0, DateTimeKind.Unspecified), "https://images.unsplash.com/photo-1509228468518-180dd4864904?auto=format&fit=crop&w=400&q=80", "Penalty", "Pelota de fútbol", 1200m, null, 30 },
+                    { 16, true, 1, "Set completo de acuarelas", "6-12 años", false, new DateTime(2025, 7, 30, 21, 45, 36, 0, DateTimeKind.Unspecified), "https://images.unsplash.com/photo-1519125323398-675f0ddb6308?auto=format&fit=crop&w=400&q=80", "Crayola", "Set de acuarelas", 800m, null, 25 }
                 });
 
             migrationBuilder.CreateIndex(

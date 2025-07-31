@@ -3,7 +3,7 @@ import { RouterOutlet, RouterLink } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
 import { FormsModule } from '@angular/forms';
-import { SubcategoriaService, BusquedaService, CarritoService } from './services';
+import { SubcategoriaService, BusquedaService, CarritoService, WishlistService } from './services';
 
 @Component({
   selector: 'app-root',
@@ -70,6 +70,12 @@ import { SubcategoriaService, BusquedaService, CarritoService } from './services
               {{ cantidadCarrito }}
             </span>
           </a>
+          <a class="btn btn-outline-light position-relative ms-2" routerLink="/wishlist" aria-label="Lista de deseos">
+            <i class="bi bi-heart"></i>
+            <span *ngIf="cantidadWishlist > 0" class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger text-white">
+              {{ cantidadWishlist }}
+            </span>
+          </a>
         </div>
       </div>
     </nav>
@@ -97,8 +103,9 @@ import { SubcategoriaService, BusquedaService, CarritoService } from './services
 export class AppComponent {
   terminoBusqueda: string = '';
   cantidadCarrito: number = 0;
+  cantidadWishlist: number = 0;
 
-  constructor(private router: Router, private subcategoriaService: SubcategoriaService, private busquedaService: BusquedaService, private carritoService: CarritoService) {
+  constructor(private router: Router, private subcategoriaService: SubcategoriaService, private busquedaService: BusquedaService, private carritoService: CarritoService, private wishlistService: WishlistService) {
     // Limpiar subcategoría cuando se navega a otras rutas
     this.router.events.subscribe(() => {
       const currentUrl = this.router.url;
@@ -110,6 +117,11 @@ export class AppComponent {
     // Suscribirse a cambios en el carrito
     this.carritoService.carrito$.subscribe(carrito => {
       this.cantidadCarrito = this.carritoService.obtenerCantidadTotal();
+    });
+
+    // Suscribirse a cambios en la wishlist
+    this.wishlistService.wishlist$.subscribe(wishlist => {
+      this.cantidadWishlist = this.wishlistService.obtenerCantidad();
     });
   }
 

@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace JugueteriaAPI.Migrations
 {
     [DbContext(typeof(JugueteriaContext))]
-    [Migration("20250730035948_InitialCreate")]
+    [Migration("20250731010146_InitialCreate")]
     partial class InitialCreate
     {
         /// <inheritdoc />
@@ -62,7 +62,7 @@ namespace JugueteriaAPI.Migrations
                             Id = 1,
                             Activo = true,
                             Descripcion = "Juguetes que fomentan el aprendizaje y desarrollo",
-                            FechaCreacion = new DateTime(2025, 7, 30, 0, 59, 48, 157, DateTimeKind.Local).AddTicks(5495),
+                            FechaCreacion = new DateTime(2025, 7, 30, 21, 45, 36, 0, DateTimeKind.Unspecified),
                             ImagenUrl = "/images/educativos.jpg",
                             Nombre = "Juguetes Educativos"
                         },
@@ -71,7 +71,7 @@ namespace JugueteriaAPI.Migrations
                             Id = 2,
                             Activo = true,
                             Descripcion = "Bloques, legos y sets de construcción",
-                            FechaCreacion = new DateTime(2025, 7, 30, 0, 59, 48, 157, DateTimeKind.Local).AddTicks(6236),
+                            FechaCreacion = new DateTime(2025, 7, 30, 21, 45, 36, 0, DateTimeKind.Unspecified),
                             ImagenUrl = "/images/construccion.jpg",
                             Nombre = "Juguetes de Construcción"
                         },
@@ -80,7 +80,7 @@ namespace JugueteriaAPI.Migrations
                             Id = 3,
                             Activo = true,
                             Descripcion = "Muñecas, peluches y accesorios",
-                            FechaCreacion = new DateTime(2025, 7, 30, 0, 59, 48, 157, DateTimeKind.Local).AddTicks(6240),
+                            FechaCreacion = new DateTime(2025, 7, 30, 21, 45, 36, 0, DateTimeKind.Unspecified),
                             ImagenUrl = "/images/munecas.jpg",
                             Nombre = "Muñecas y Accesorios"
                         },
@@ -89,7 +89,7 @@ namespace JugueteriaAPI.Migrations
                             Id = 4,
                             Activo = true,
                             Descripcion = "Juguetes con tecnología y electrónica",
-                            FechaCreacion = new DateTime(2025, 7, 30, 0, 59, 48, 157, DateTimeKind.Local).AddTicks(6242),
+                            FechaCreacion = new DateTime(2025, 7, 30, 21, 45, 36, 0, DateTimeKind.Unspecified),
                             ImagenUrl = "/images/electronicos.jpg",
                             Nombre = "Juguetes Electrónicos"
                         },
@@ -98,7 +98,7 @@ namespace JugueteriaAPI.Migrations
                             Id = 5,
                             Activo = true,
                             Descripcion = "Juegos de mesa para toda la familia",
-                            FechaCreacion = new DateTime(2025, 7, 30, 0, 59, 48, 157, DateTimeKind.Local).AddTicks(6243),
+                            FechaCreacion = new DateTime(2025, 7, 30, 21, 45, 36, 0, DateTimeKind.Unspecified),
                             ImagenUrl = "/images/mesa.jpg",
                             Nombre = "Juegos de Mesa"
                         });
@@ -262,125 +262,249 @@ namespace JugueteriaAPI.Migrations
                         {
                             Id = 1,
                             Activo = true,
-                            CategoriaId = 1,
-                            Descripcion = "Bloques de colores para aprender formas y colores",
-                            EdadRecomendada = "3-6 años",
-                            EnOferta = true,
-                            FechaCreacion = new DateTime(2025, 7, 30, 0, 59, 48, 158, DateTimeKind.Local).AddTicks(2361),
-                            ImagenUrl = "/images/bloques.jpg",
-                            Marca = "EducaKids",
-                            Nombre = "Set de Bloques Educativos",
-                            Precio = 29.99m,
-                            PrecioOferta = 24.99m,
-                            Stock = 50
+                            CategoriaId = 4,
+                            Descripcion = "Auto de carreras de alta velocidad",
+                            EdadRecomendada = "4-8 años",
+                            EnOferta = false,
+                            FechaCreacion = new DateTime(2025, 7, 30, 21, 45, 36, 0, DateTimeKind.Unspecified),
+                            ImagenUrl = "https://images.unsplash.com/photo-1519125323398-675f0ddb6308?auto=format&fit=crop&w=400&q=80",
+                            Marca = "Hot Wheels",
+                            Nombre = "Auto de Carrera",
+                            Precio = 1500m,
+                            Stock = 25
                         },
                         new
                         {
                             Id = 2,
                             Activo = true,
-                            CategoriaId = 2,
-                            Descripcion = "Set de construcción de la ciudad policial",
-                            EdadRecomendada = "6-12 años",
+                            CategoriaId = 3,
+                            Descripcion = "Muñeca elegante con accesorios",
+                            EdadRecomendada = "3-8 años",
                             EnOferta = false,
-                            FechaCreacion = new DateTime(2025, 7, 30, 0, 59, 48, 158, DateTimeKind.Local).AddTicks(4319),
-                            ImagenUrl = "/images/lego-policia.jpg",
-                            Marca = "LEGO",
-                            Nombre = "Lego City Policía",
-                            Precio = 45.99m,
+                            FechaCreacion = new DateTime(2025, 7, 30, 21, 45, 36, 0, DateTimeKind.Unspecified),
+                            ImagenUrl = "https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=400&q=80",
+                            Marca = "Barbie",
+                            Nombre = "Muñeca",
+                            Precio = 1200m,
                             Stock = 30
                         },
                         new
                         {
                             Id = 3,
                             Activo = true,
-                            CategoriaId = 3,
-                            Descripcion = "Muñeca Barbie con vestidos elegantes",
-                            EdadRecomendada = "3-8 años",
-                            EnOferta = true,
-                            FechaCreacion = new DateTime(2025, 7, 30, 0, 59, 48, 158, DateTimeKind.Local).AddTicks(4324),
-                            ImagenUrl = "/images/barbie.jpg",
-                            Marca = "Mattel",
-                            Nombre = "Muñeca Barbie Fashionista",
-                            Precio = 19.99m,
-                            PrecioOferta = 15.99m,
-                            Stock = 25
+                            CategoriaId = 2,
+                            Descripcion = "Set de bloques para construir",
+                            EdadRecomendada = "6-12 años",
+                            EnOferta = false,
+                            FechaCreacion = new DateTime(2025, 7, 30, 21, 45, 36, 0, DateTimeKind.Unspecified),
+                            ImagenUrl = "https://images.unsplash.com/photo-1464983953574-0892a716854b?auto=format&fit=crop&w=400&q=80",
+                            Marca = "Lego",
+                            Nombre = "Bloques de Construcción",
+                            Precio = 1800m,
+                            Stock = 20
                         },
                         new
                         {
                             Id = 4,
                             Activo = true,
-                            CategoriaId = 4,
-                            Descripcion = "Robot educativo para aprender programación",
-                            EdadRecomendada = "8-14 años",
+                            CategoriaId = 3,
+                            Descripcion = "Peluche suave y abrazable",
+                            EdadRecomendada = "0-5 años",
                             EnOferta = false,
-                            FechaCreacion = new DateTime(2025, 7, 30, 0, 59, 48, 158, DateTimeKind.Local).AddTicks(4326),
-                            ImagenUrl = "/images/robot.jpg",
-                            Marca = "TechToys",
-                            Nombre = "Robot Programable",
-                            Precio = 89.99m,
-                            Stock = 15
+                            FechaCreacion = new DateTime(2025, 7, 30, 21, 45, 36, 0, DateTimeKind.Unspecified),
+                            ImagenUrl = "https://images.unsplash.com/photo-1517841905240-472988babdf9?auto=format&fit=crop&w=400&q=80",
+                            Marca = "Fisher-Price",
+                            Nombre = "Peluche",
+                            Precio = 950m,
+                            Stock = 40
                         },
                         new
                         {
                             Id = 5,
                             Activo = true,
-                            CategoriaId = 5,
-                            Descripcion = "Versión infantil del clásico juego de mesa",
-                            EdadRecomendada = "5-8 años",
-                            EnOferta = false,
-                            FechaCreacion = new DateTime(2025, 7, 30, 0, 59, 48, 158, DateTimeKind.Local).AddTicks(4328),
-                            ImagenUrl = "/images/monopoly.jpg",
-                            Marca = "Hasbro",
-                            Nombre = "Monopoly Junior",
-                            Precio = 24.99m,
-                            Stock = 40
+                            CategoriaId = 4,
+                            Descripcion = "Auto de carreras de alta velocidad",
+                            EdadRecomendada = "4-8 años",
+                            EnOferta = true,
+                            FechaCreacion = new DateTime(2025, 7, 30, 21, 45, 36, 0, DateTimeKind.Unspecified),
+                            ImagenUrl = "https://images.unsplash.com/photo-1519125323398-675f0ddb6308?auto=format&fit=crop&w=400&q=80",
+                            Marca = "Hot Wheels",
+                            Nombre = "Auto de Carrera",
+                            Precio = 1500m,
+                            PrecioOferta = 1200m,
+                            Stock = 25
                         },
                         new
                         {
                             Id = 6,
                             Activo = true,
-                            CategoriaId = 1,
-                            Descripcion = "Puzzle de paisaje para toda la familia",
-                            EdadRecomendada = "8+ años",
+                            CategoriaId = 3,
+                            Descripcion = "Muñeca elegante con accesorios",
+                            EdadRecomendada = "3-8 años",
                             EnOferta = true,
-                            FechaCreacion = new DateTime(2025, 7, 30, 0, 59, 48, 158, DateTimeKind.Local).AddTicks(4330),
-                            ImagenUrl = "/images/puzzle.jpg",
-                            Marca = "Ravensburger",
-                            Nombre = "Puzzle 1000 Piezas",
-                            Precio = 34.99m,
-                            PrecioOferta = 29.99m,
-                            Stock = 20
+                            FechaCreacion = new DateTime(2025, 7, 30, 21, 45, 36, 0, DateTimeKind.Unspecified),
+                            ImagenUrl = "https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=400&q=80",
+                            Marca = "Barbie",
+                            Nombre = "Muñeca",
+                            Precio = 1200m,
+                            PrecioOferta = 950m,
+                            Stock = 30
                         },
                         new
                         {
                             Id = 7,
                             Activo = true,
-                            CategoriaId = 1,
-                            Descripcion = "Set completo de pinturas y pinceles",
+                            CategoriaId = 2,
+                            Descripcion = "Set de bloques para construir",
                             EdadRecomendada = "6-12 años",
-                            EnOferta = false,
-                            FechaCreacion = new DateTime(2025, 7, 30, 0, 59, 48, 158, DateTimeKind.Local).AddTicks(4332),
-                            ImagenUrl = "/images/pinturas.jpg",
-                            Marca = "ArtCraft",
-                            Nombre = "Set de Pinturas",
-                            Precio = 39.99m,
-                            Stock = 35
+                            EnOferta = true,
+                            FechaCreacion = new DateTime(2025, 7, 30, 21, 45, 36, 0, DateTimeKind.Unspecified),
+                            ImagenUrl = "https://images.unsplash.com/photo-1464983953574-0892a716854b?auto=format&fit=crop&w=400&q=80",
+                            Marca = "Lego",
+                            Nombre = "Bloques de Construcción",
+                            Precio = 1800m,
+                            PrecioOferta = 1450m,
+                            Stock = 20
                         },
                         new
                         {
                             Id = 8,
                             Activo = true,
-                            CategoriaId = 4,
-                            Descripcion = "Pista de carreras con coches de control remoto",
-                            EdadRecomendada = "4-10 años",
+                            CategoriaId = 3,
+                            Descripcion = "Peluche suave y abrazable",
+                            EdadRecomendada = "0-5 años",
                             EnOferta = true,
-                            FechaCreacion = new DateTime(2025, 7, 30, 0, 59, 48, 158, DateTimeKind.Local).AddTicks(4334),
-                            ImagenUrl = "/images/carrera.jpg",
-                            Marca = "HotWheels",
-                            Nombre = "Carrera de Coches",
-                            Precio = 59.99m,
-                            PrecioOferta = 49.99m,
-                            Stock = 18
+                            FechaCreacion = new DateTime(2025, 7, 30, 21, 45, 36, 0, DateTimeKind.Unspecified),
+                            ImagenUrl = "https://images.unsplash.com/photo-1517935706615-2717063c2225?auto=format&fit=crop&w=400&q=80",
+                            Marca = "Fisher-Price",
+                            Nombre = "Peluche",
+                            Precio = 950m,
+                            PrecioOferta = 700m,
+                            Stock = 40
+                        },
+                        new
+                        {
+                            Id = 9,
+                            Activo = true,
+                            CategoriaId = 1,
+                            Descripcion = "Puzzle de paisaje para toda la familia",
+                            EdadRecomendada = "8+ años",
+                            EnOferta = true,
+                            FechaCreacion = new DateTime(2025, 7, 30, 21, 45, 36, 0, DateTimeKind.Unspecified),
+                            ImagenUrl = "https://images.unsplash.com/photo-1519125323398-675f0ddb6308?auto=format&fit=crop&w=400&q=80",
+                            Marca = "Ravensburger",
+                            Nombre = "Puzzle 1000 Piezas",
+                            Precio = 2500m,
+                            PrecioOferta = 1800m,
+                            Stock = 15
+                        },
+                        new
+                        {
+                            Id = 10,
+                            Activo = true,
+                            CategoriaId = 4,
+                            Descripcion = "Robot educativo para aprender programación",
+                            EdadRecomendada = "8-14 años",
+                            EnOferta = true,
+                            FechaCreacion = new DateTime(2025, 7, 30, 21, 45, 36, 0, DateTimeKind.Unspecified),
+                            ImagenUrl = "https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=400&q=80",
+                            Marca = "TechToys",
+                            Nombre = "Robot Programable",
+                            Precio = 3200m,
+                            PrecioOferta = 2400m,
+                            Stock = 10
+                        },
+                        new
+                        {
+                            Id = 11,
+                            Activo = true,
+                            CategoriaId = 1,
+                            Descripcion = "Set completo de pinturas y pinceles",
+                            EdadRecomendada = "6-12 años",
+                            EnOferta = true,
+                            FechaCreacion = new DateTime(2025, 7, 30, 21, 45, 36, 0, DateTimeKind.Unspecified),
+                            ImagenUrl = "https://images.unsplash.com/photo-1464983953574-0892a716854b?auto=format&fit=crop&w=400&q=80",
+                            Marca = "Crayola",
+                            Nombre = "Set de Pinturas",
+                            Precio = 800m,
+                            PrecioOferta = 550m,
+                            Stock = 35
+                        },
+                        new
+                        {
+                            Id = 12,
+                            Activo = true,
+                            CategoriaId = 5,
+                            Descripcion = "Juego de mesa para toda la familia",
+                            EdadRecomendada = "6+ años",
+                            EnOferta = true,
+                            FechaCreacion = new DateTime(2025, 7, 30, 21, 45, 36, 0, DateTimeKind.Unspecified),
+                            ImagenUrl = "https://images.unsplash.com/photo-1517935706615-2717063c2225?auto=format&fit=crop&w=400&q=80",
+                            Marca = "Hasbro",
+                            Nombre = "Juego de Mesa",
+                            Precio = 1800m,
+                            PrecioOferta = 1300m,
+                            Stock = 20
+                        },
+                        new
+                        {
+                            Id = 13,
+                            Activo = true,
+                            CategoriaId = 2,
+                            Descripcion = "Tobogán colorido para el jardín",
+                            EdadRecomendada = "2-8 años",
+                            EnOferta = false,
+                            FechaCreacion = new DateTime(2025, 7, 30, 21, 45, 36, 0, DateTimeKind.Unspecified),
+                            ImagenUrl = "https://images.unsplash.com/photo-1519125323398-675f0ddb6308?auto=format&fit=crop&w=400&q=80",
+                            Marca = "Little Tikes",
+                            Nombre = "Tobogán Arcoíris",
+                            Precio = 3500m,
+                            Stock = 8
+                        },
+                        new
+                        {
+                            Id = 14,
+                            Activo = true,
+                            CategoriaId = 2,
+                            Descripcion = "Columpio para dos niños",
+                            EdadRecomendada = "3-10 años",
+                            EnOferta = false,
+                            FechaCreacion = new DateTime(2025, 7, 30, 21, 45, 36, 0, DateTimeKind.Unspecified),
+                            ImagenUrl = "https://images.unsplash.com/photo-1517935706615-2717063c2225?auto=format&fit=crop&w=400&q=80",
+                            Marca = "Step2",
+                            Nombre = "Columpio doble",
+                            Precio = 4200m,
+                            Stock = 5
+                        },
+                        new
+                        {
+                            Id = 15,
+                            Activo = true,
+                            CategoriaId = 4,
+                            Descripcion = "Pelota oficial de fútbol",
+                            EdadRecomendada = "6+ años",
+                            EnOferta = false,
+                            FechaCreacion = new DateTime(2025, 7, 30, 21, 45, 36, 0, DateTimeKind.Unspecified),
+                            ImagenUrl = "https://images.unsplash.com/photo-1509228468518-180dd4864904?auto=format&fit=crop&w=400&q=80",
+                            Marca = "Penalty",
+                            Nombre = "Pelota de fútbol",
+                            Precio = 1200m,
+                            Stock = 30
+                        },
+                        new
+                        {
+                            Id = 16,
+                            Activo = true,
+                            CategoriaId = 1,
+                            Descripcion = "Set completo de acuarelas",
+                            EdadRecomendada = "6-12 años",
+                            EnOferta = false,
+                            FechaCreacion = new DateTime(2025, 7, 30, 21, 45, 36, 0, DateTimeKind.Unspecified),
+                            ImagenUrl = "https://images.unsplash.com/photo-1519125323398-675f0ddb6308?auto=format&fit=crop&w=400&q=80",
+                            Marca = "Crayola",
+                            Nombre = "Set de acuarelas",
+                            Precio = 800m,
+                            Stock = 25
                         });
                 });
 
@@ -447,7 +571,7 @@ namespace JugueteriaAPI.Migrations
                             CodigoPostal = "28001",
                             Direccion = "Calle Principal 123",
                             Email = "juan.perez@email.com",
-                            FechaRegistro = new DateTime(2025, 7, 30, 0, 59, 48, 158, DateTimeKind.Local).AddTicks(5101),
+                            FechaRegistro = new DateTime(2025, 7, 30, 21, 45, 36, 0, DateTimeKind.Unspecified),
                             Nombre = "Juan",
                             Telefono = "123456789"
                         },
@@ -460,7 +584,7 @@ namespace JugueteriaAPI.Migrations
                             CodigoPostal = "08001",
                             Direccion = "Avenida Central 456",
                             Email = "maria.garcia@email.com",
-                            FechaRegistro = new DateTime(2025, 7, 30, 0, 59, 48, 158, DateTimeKind.Local).AddTicks(6412),
+                            FechaRegistro = new DateTime(2025, 7, 30, 21, 45, 36, 0, DateTimeKind.Unspecified),
                             Nombre = "María",
                             Telefono = "987654321"
                         });

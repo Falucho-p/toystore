@@ -1,7 +1,7 @@
 import { Component, Input, OnInit, OnDestroy, ChangeDetectorRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterLink, ActivatedRoute, Router } from '@angular/router';
-import { SubcategoriaService, BusquedaService, CarritoService, Producto } from '../services';
+import { SubcategoriaService, BusquedaService, CarritoService, WishlistService, Producto } from '../services';
 import { Subscription } from 'rxjs';
 
 @Component({
@@ -92,6 +92,48 @@ import { Subscription } from 'rxjs';
           </button>
         </div>
       </section>
+      
+      <!-- Sección de servicios -->
+      <section class="container mb-5" aria-label="Nuestros servicios">
+        <div class="row g-4 justify-content-center">
+          <div class="col-12 col-md-4 text-center">
+            <div class="card h-100 border-0 shadow-sm bg-light">
+              <div class="card-body py-4">
+                <div class="mb-3">
+                  <i class="bi bi-truck fs-1 text-primary"></i>
+                </div>
+                <h5 class="card-title fw-bold text-dark mb-2">Envíos a todo el país</h5>
+                <p class="card-text text-muted small mb-0">*Gratis a partir de $39.999</p>
+              </div>
+            </div>
+          </div>
+          
+          <div class="col-12 col-md-4 text-center">
+            <div class="card h-100 border-0 shadow-sm bg-light">
+              <div class="card-body py-4">
+                <div class="mb-3">
+                  <i class="bi bi-credit-card fs-1 text-success"></i>
+                </div>
+                <h5 class="card-title fw-bold text-dark mb-2">Hasta 3 cuotas sin interés</h5>
+                <p class="card-text text-muted small mb-0">Con todas las tarjetas de crédito</p>
+              </div>
+            </div>
+          </div>
+          
+          <div class="col-12 col-md-4 text-center">
+            <div class="card h-100 border-0 shadow-sm bg-light">
+              <div class="card-body py-4">
+                <div class="mb-3">
+                  <i class="bi bi-geo-alt fs-1 text-danger"></i>
+                </div>
+                <h5 class="card-title fw-bold text-dark mb-2">Retirá gratis</h5>
+                <p class="card-text text-muted small mb-0">En nuestras sucursales</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+      
       <!-- Productos destacados -->
       <section class="container mb-5 animate-fade-slide" aria-label="Productos destacados">
         <h2 class="text-center text-danger mb-4">Productos destacados</h2>
@@ -103,9 +145,14 @@ import { Subscription } from 'rxjs';
                 <h3 class="card-title text-info fw-bold fs-5">{{ producto.nombre }}</h3>
                 <p class="card-text mb-1"><strong>Marca:</strong> <span class="text-secondary">{{ producto.marca }}</span></p>
                 <p class="card-text fs-5 mb-2"><strong>Precio:</strong> <span class="text-success">&#36;{{ producto.precio }}</span></p>
-                <button class="btn btn-warning fw-bold mt-auto" (click)="agregarAlCarrito(producto)">
-                  <i class="bi bi-cart-plus"></i> Agregar al carrito
-                </button>
+                <div class="d-flex gap-2 mt-auto">
+                  <button class="btn btn-warning fw-bold flex-fill" (click)="agregarAlCarrito(producto)">
+                    <i class="bi bi-cart-plus"></i> Agregar al carrito
+                  </button>
+                  <button class="btn btn-outline-danger" (click)="toggleWishlist(producto)" [class.btn-danger]="estaEnWishlist(producto.id)">
+                    <i class="bi" [class.bi-heart]="!estaEnWishlist(producto.id)" [class.bi-heart-fill]="estaEnWishlist(producto.id)"></i>
+                  </button>
+                </div>
               </div>
             </div>
           </div>
@@ -124,9 +171,14 @@ import { Subscription } from 'rxjs';
                 <h3 class="card-title text-info fw-bold fs-5">{{ producto.nombre }}</h3>
                 <p class="card-text mb-1"><strong>Marca:</strong> <span class="text-secondary">{{ producto.marca }}</span></p>
                 <p class="card-text fs-5 mb-2"><strong>Precio:</strong> <span class="text-success">&#36;{{ producto.precio }}</span></p>
-                <button class="btn btn-warning fw-bold mt-auto" (click)="agregarAlCarritoFiltrado(producto)">
-                  <i class="bi bi-cart-plus"></i> Agregar al carrito
-                </button>
+                <div class="d-flex gap-2 mt-auto">
+                  <button class="btn btn-warning fw-bold flex-fill" (click)="agregarAlCarritoFiltrado(producto)">
+                    <i class="bi bi-cart-plus"></i> Agregar al carrito
+                  </button>
+                  <button class="btn btn-outline-danger" (click)="toggleWishlistFiltrado(producto)" [class.btn-danger]="estaEnWishlist(producto.id)">
+                    <i class="bi" [class.bi-heart]="!estaEnWishlist(producto.id)" [class.bi-heart-fill]="estaEnWishlist(producto.id)"></i>
+                  </button>
+                </div>
               </div>
             </div>
           </div>
@@ -150,9 +202,14 @@ import { Subscription } from 'rxjs';
                 <p class="card-text mb-1"><strong>Marca:</strong> <span class="text-secondary">{{ producto.marca }}</span></p>
                 <p class="card-text mb-1"><strong>Categoría:</strong> <span class="text-warning">{{ producto.categoria }}</span></p>
                 <p class="card-text fs-5 mb-2"><strong>Precio:</strong> <span class="text-success">&#36;{{ producto.precio }}</span></p>
-                <button class="btn btn-warning fw-bold mt-auto" (click)="agregarAlCarritoFiltrado(producto)">
-                  <i class="bi bi-cart-plus"></i> Agregar al carrito
-                </button>
+                <div class="d-flex gap-2 mt-auto">
+                  <button class="btn btn-warning fw-bold flex-fill" (click)="agregarAlCarritoFiltrado(producto)">
+                    <i class="bi bi-cart-plus"></i> Agregar al carrito
+                  </button>
+                  <button class="btn btn-outline-danger" (click)="toggleWishlistFiltrado(producto)" [class.btn-danger]="estaEnWishlist(producto.id)">
+                    <i class="bi" [class.bi-heart]="!estaEnWishlist(producto.id)" [class.bi-heart-fill]="estaEnWishlist(producto.id)"></i>
+                  </button>
+                </div>
               </div>
             </div>
           </div>
@@ -169,10 +226,10 @@ import { Subscription } from 'rxjs';
 })
 export class InicioComponent implements OnInit, OnDestroy {
   destacados = [
-    { nombre: 'Auto de Carrera', marca: 'Hot Wheels', precio: 1500, imagen: 'https://images.unsplash.com/photo-1519125323398-675f0ddb6308?auto=format&fit=crop&w=400&q=80' },
-    { nombre: 'Muñeca', marca: 'Barbie', precio: 1200, imagen: 'https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=400&q=80' },
-    { nombre: 'Bloques de Construcción', marca: 'Lego', precio: 1800, imagen: 'https://images.unsplash.com/photo-1464983953574-0892a716854b?auto=format&fit=crop&w=400&q=80' },
-    { nombre: 'Peluche', marca: 'Fisher-Price', precio: 950, imagen: 'https://images.unsplash.com/photo-1517841905240-472988babdf9?auto=format&fit=crop&w=400&q=80' }
+    { id: 1, nombre: 'Auto de Carrera', marca: 'Hot Wheels', precio: 1500, imagen: 'https://images.unsplash.com/photo-1519125323398-675f0ddb6308?auto=format&fit=crop&w=400&q=80' },
+    { id: 2, nombre: 'Muñeca', marca: 'Barbie', precio: 1200, imagen: 'https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=400&q=80' },
+    { id: 3, nombre: 'Bloques de Construcción', marca: 'Lego', precio: 1800, imagen: 'https://images.unsplash.com/photo-1464983953574-0892a716854b?auto=format&fit=crop&w=400&q=80' },
+    { id: 4, nombre: 'Peluche', marca: 'Fisher-Price', precio: 950, imagen: 'https://images.unsplash.com/photo-1517841905240-472988babdf9?auto=format&fit=crop&w=400&q=80' }
   ];
   subcategoriaSeleccionada: string | null = null;
   productosFiltrados: any[] = [];
@@ -815,12 +872,19 @@ export class InicioComponent implements OnInit, OnDestroy {
     private subcategoriaService: SubcategoriaService, 
     private busquedaService: BusquedaService,
     private carritoService: CarritoService,
+    private wishlistService: WishlistService,
     private route: ActivatedRoute,
     private router: Router,
     private cdr: ChangeDetectorRef
   ) {}
 
   ngOnInit() {
+    // Asignar IDs a los productos
+    this.productos = this.productos.map((producto, index) => ({
+      ...producto,
+      id: index + 100 // IDs empezando desde 100 para evitar conflictos
+    }));
+
     // Suscripción a subcategorías
     this.subscription.add(
       this.subcategoriaService.subcategoria$.subscribe(sub => {
@@ -921,7 +985,7 @@ export class InicioComponent implements OnInit, OnDestroy {
 
   agregarAlCarritoFiltrado(producto: any) {
     const productoParaCarrito: Producto = {
-      id: this.productos.indexOf(producto),
+      id: producto.id,
       nombre: producto.nombre,
       marca: producto.marca,
       precio: producto.precio,
@@ -929,5 +993,41 @@ export class InicioComponent implements OnInit, OnDestroy {
     };
     this.carritoService.agregarProducto(productoParaCarrito);
     alert('¡Producto agregado al carrito!');
+  }
+
+  toggleWishlist(producto: any) {
+    const productoParaWishlist: Producto = {
+      id: this.productos.indexOf(producto),
+      nombre: producto.nombre,
+      marca: producto.marca,
+      precio: producto.precio,
+      imagen: producto.imagen
+    };
+    
+    if (this.estaEnWishlist(productoParaWishlist.id)) {
+      this.wishlistService.removerDeWishlist(productoParaWishlist.id);
+    } else {
+      this.wishlistService.agregarAWishlist(productoParaWishlist);
+    }
+  }
+
+  estaEnWishlist(id: number): boolean {
+    return this.wishlistService.estaEnWishlist(id);
+  }
+
+  toggleWishlistFiltrado(producto: any) {
+    const productoParaWishlist: Producto = {
+      id: producto.id,
+      nombre: producto.nombre,
+      marca: producto.marca,
+      precio: producto.precio,
+      imagen: producto.imagen
+    };
+    
+    if (this.estaEnWishlist(productoParaWishlist.id)) {
+      this.wishlistService.removerDeWishlist(productoParaWishlist.id);
+    } else {
+      this.wishlistService.agregarAWishlist(productoParaWishlist);
+    }
   }
 } 

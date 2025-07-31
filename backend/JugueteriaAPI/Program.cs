@@ -22,6 +22,7 @@ builder.Services.AddDbContext<JugueteriaContext>(options =>
 builder.Services.AddScoped<IProductoService, ProductoService>();
 builder.Services.AddScoped<ICategoriaService, CategoriaService>();
 builder.Services.AddScoped<ICarritoService, CarritoService>();
+builder.Services.AddScoped<IEstadisticasService, EstadisticasService>();
 
 // Configurar CORS para Angular
 builder.Services.AddCors(options =>

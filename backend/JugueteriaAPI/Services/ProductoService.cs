@@ -105,5 +105,61 @@ namespace JugueteriaAPI.Services
         {
             return await _context.Productos.AnyAsync(p => p.Id == id && p.Activo);
         }
+
+        public async Task<IEnumerable<Producto>> GetProductosDestacadosAsync()
+        {
+            return await _context.Productos
+                .Include(p => p.Categoria)
+                .Where(p => p.Activo && p.Stock > 0)
+                .OrderByDescending(p => p.FechaCreacion)
+                .Take(4)
+                .ToListAsync();
+        }
+
+        public async Task<IEnumerable<Producto>> GetProductosPorEdadAsync(string edadRecomendada)
+        {
+            return await _context.Productos
+                .Include(p => p.Categoria)
+                .Where(p => p.Activo && p.EdadRecomendada!.Contains(edadRecomendada))
+                .OrderBy(p => p.Precio)
+                .ToListAsync();
+        }
+
+        public async Task<IEnumerable<Producto>> GetProductosPorMarcaAsync(string marca)
+        {
+            return await _context.Productos
+                .Include(p => p.Categoria)
+                .Where(p => p.Activo && p.Marca!.ToLower().Contains(marca.ToLower()))
+                .OrderBy(p => p.Nombre)
+                .ToListAsync();
+        }
+
+        public async Task<IEnumerable<Producto>> GetProductosPorPrecioAsync(decimal precioMin, decimal precioMax)
+        {
+            return await _context.Productos
+                .Include(p => p.Categoria)
+                .Where(p => p.Activo && p.Precio >= precioMin && p.Precio <= precioMax)
+                .OrderBy(p => p.Precio)
+                .ToListAsync();
+        }
+
+        public async Task UpdateStockAsync(int productoId, int cantidad)
+        {
+            var producto = await _context.Productos.FindAsync(productoId);
+            if (producto != null)
+            {
+                producto.Stock = Math.Max(0, producto.Stock - cantidad);
+                await _context.SaveChangesAsync();
+            }
+        }
+
+        public async Task<IEnumerable<Producto>> GetProductosBajoStockAsync(int stockMinimo = 5)
+        {
+            return await _context.Productos
+                .Include(p => p.Categoria)
+                .Where(p => p.Activo && p.Stock <= stockMinimo)
+                .OrderBy(p => p.Stock)
+                .ToListAsync();
+        }
     }
 } 

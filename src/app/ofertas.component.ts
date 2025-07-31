@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { CarritoService, Producto } from './services';
+import { CarritoService, WishlistService, Producto } from './services';
 
 @Component({
   selector: 'app-ofertas',
@@ -21,7 +21,14 @@ import { CarritoService, Producto } from './services';
                 <span class="text-muted text-decoration-line-through">&#36;{{ producto.precioOriginal }}</span>
                 <span class="fs-5 text-success ms-2">&#36;{{ producto.precioOferta }}</span>
               </p>
-              <button class="btn btn-warning fw-bold mt-auto" (click)="agregarAlCarrito(producto)"><i class="bi bi-cart-plus"></i> Agregar al carrito</button>
+              <div class="d-flex gap-2 mt-auto">
+                <button class="btn btn-warning fw-bold flex-fill" (click)="agregarAlCarrito(producto)">
+                  <i class="bi bi-cart-plus"></i> Agregar al carrito
+                </button>
+                <button class="btn btn-outline-danger" (click)="toggleWishlist(producto)" [class.btn-danger]="estaEnWishlist(producto.id)">
+                  <i class="bi" [class.bi-heart]="!estaEnWishlist(producto.id)" [class.bi-heart-fill]="estaEnWishlist(producto.id)"></i>
+                </button>
+              </div>
             </div>
           </div>
         </div>
@@ -30,18 +37,22 @@ import { CarritoService, Producto } from './services';
   `
 })
 export class OfertasComponent {
-  constructor(private carritoService: CarritoService) {}
+  constructor(private carritoService: CarritoService, private wishlistService: WishlistService) {}
   
   ofertas = [
-    { nombre: 'Auto de Carrera', marca: 'Hot Wheels', precioOriginal: 1500, precioOferta: 1200, imagen: 'https://images.unsplash.com/photo-1519125323398-675f0ddb6308?auto=format&fit=crop&w=400&q=80' },
-    { nombre: 'Muñeca', marca: 'Barbie', precioOriginal: 1200, precioOferta: 950, imagen: 'https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=400&q=80' },
-    { nombre: 'Bloques de Construcción', marca: 'Lego', precioOriginal: 1800, precioOferta: 1450, imagen: 'https://images.unsplash.com/photo-1464983953574-0892a716854b?auto=format&fit=crop&w=400&q=80' },
-    { nombre: 'Peluche', marca: 'Fisher-Price', precioOriginal: 950, precioOferta: 700, imagen: 'https://images.unsplash.com/photo-1517935706615-2717063c2225?auto=format&fit=crop&w=400&q=80' }
+    { id: 1, nombre: 'Auto de Carrera', marca: 'Hot Wheels', precioOriginal: 1500, precioOferta: 1200, imagen: 'https://images.unsplash.com/photo-1519125323398-675f0ddb6308?auto=format&fit=crop&w=400&q=80' },
+    { id: 2, nombre: 'Muñeca', marca: 'Barbie', precioOriginal: 1200, precioOferta: 950, imagen: 'https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=400&q=80' },
+    { id: 3, nombre: 'Bloques de Construcción', marca: 'Lego', precioOriginal: 1800, precioOferta: 1450, imagen: 'https://images.unsplash.com/photo-1464983953574-0892a716854b?auto=format&fit=crop&w=400&q=80' },
+    { id: 4, nombre: 'Peluche', marca: 'Fisher-Price', precioOriginal: 950, precioOferta: 700, imagen: 'https://images.unsplash.com/photo-1517935706615-2717063c2225?auto=format&fit=crop&w=400&q=80' },
+    { id: 5, nombre: 'Puzzle 1000 Piezas', marca: 'Ravensburger', precioOriginal: 2500, precioOferta: 1800, imagen: 'https://images.unsplash.com/photo-1519125323398-675f0ddb6308?auto=format&fit=crop&w=400&q=80' },
+    { id: 6, nombre: 'Robot Programable', marca: 'TechToys', precioOriginal: 3200, precioOferta: 2400, imagen: 'https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=400&q=80' },
+    { id: 7, nombre: 'Set de Pinturas', marca: 'Crayola', precioOriginal: 800, precioOferta: 550, imagen: 'https://images.unsplash.com/photo-1464983953574-0892a716854b?auto=format&fit=crop&w=400&q=80' },
+    { id: 8, nombre: 'Juego de Mesa', marca: 'Hasbro', precioOriginal: 1800, precioOferta: 1300, imagen: 'https://images.unsplash.com/photo-1517935706615-2717063c2225?auto=format&fit=crop&w=400&q=80' }
   ];
 
   agregarAlCarrito(producto: any) {
     const productoParaCarrito: Producto = {
-      id: this.ofertas.indexOf(producto),
+      id: producto.id,
       nombre: producto.nombre,
       marca: producto.marca,
       precio: producto.precioOferta,
@@ -49,5 +60,25 @@ export class OfertasComponent {
     };
     this.carritoService.agregarProducto(productoParaCarrito);
     alert('¡Producto agregado al carrito!');
+  }
+
+  toggleWishlist(producto: any) {
+    const productoParaWishlist: Producto = {
+      id: producto.id,
+      nombre: producto.nombre,
+      marca: producto.marca,
+      precio: producto.precioOferta,
+      imagen: producto.imagen
+    };
+    
+    if (this.estaEnWishlist(productoParaWishlist.id)) {
+      this.wishlistService.removerDeWishlist(productoParaWishlist.id);
+    } else {
+      this.wishlistService.agregarAWishlist(productoParaWishlist);
+    }
+  }
+
+  estaEnWishlist(id: number): boolean {
+    return this.wishlistService.estaEnWishlist(id);
   }
 } 
