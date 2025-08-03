@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("JugueteriaAPI")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+74b94868529c39cdf1fee5acc646e4bda42dbfd4")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+b5e3aee39ae7b76a3b4f0af81943a3d2eaaea547")]
 [assembly: System.Reflection.AssemblyProductAttribute("JugueteriaAPI")]
 [assembly: System.Reflection.AssemblyTitleAttribute("JugueteriaAPI")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
